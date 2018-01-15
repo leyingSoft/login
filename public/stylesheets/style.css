@@ -1,8 +1,22 @@
-body {
-  padding: 50px;
-  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+.container{
+  margin: 50px;
 }
 
-a {
-  color: #00B7FF;
+@-webkit-keyframes fadeInOutLoop
+{
+  0% {
+    -webkit-transform: scale(1,0);
+  }
+  10% {
+    -webkit-transform: scale(1,1);
+  }
+  90% {
+    -webkit-transform: scale(1,1);
+  }
+  100% {
+    -webkit-transform: scale(1,0);
+  }
 }
+.alert{
+  -webkit-animation: fadeInOutLoop 3s forwards;
+}    

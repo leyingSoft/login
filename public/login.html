@@ -1,0 +1,43 @@
+<html>
+
+<head>
+    <title>用户登录</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0  minimum-scale=1">
+    <meta charset="UTF-8">
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="full-screen" content="true" />
+    <meta name="screen-orientation" content="portrait" />
+    <meta name="x5-fullscreen" content="true" />
+    <meta name="360-fullscreen" content="true" />
+    <script src="javascripts/vue.min.js"></script>
+    <link rel="stylesheet" href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u"
+        crossorigin="anonymous">
+    <link rel="stylesheet" href="stylesheets/style.css">
+</head>
+
+<body>
+    <div class="alert alert-danger" role="alert" id="alert" hidden>
+        <strong>错误!</strong>
+        <span id="alertText"> check yourself, you're not looking too good.</span>
+    </div>
+    <div class="alert alert-success" role="alert" id="success" hidden>
+        <strong>成功!</strong>
+        <span id="successText"> check yourself, you're not looking too good.</span>
+    </div>
+    <div class="container">
+        <!-- 登录框 -->
+        <div class="jumbotron" id="login">
+            <h1>用户登录</h1>
+            <input v-model="username" class="form-control" placeholder="输入用户名">
+            <br>
+            <input type="password" v-model="password" class="form-control" placeholder="输入密码">
+            <br>
+            <button @click="login" class="btn btn-default">登陆</button>
+
+        </div>
+    </div>
+    <script src="javascripts/ajax.js"></script>
+    <script src="javascripts/login.js"></script>
+</body>
+
+</html>
