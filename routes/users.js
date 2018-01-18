@@ -5,21 +5,32 @@ var multipartMiddleware = multipart();
 var crypto = require('crypto');//加密函数
 var mysql = require('mysql');//mysql
 
-var mysqlConfig = {//数据库连接参数
+/*数据库连接参数
+修改host,user,password,databse为数据库的链接信息
+*/
+var mysqlConfig = {
   host: 'localhost',
   user: 'root',
-  password: 'devilxulo',
+  password: 'password',
   database: 'LOGIN'
 };
 
-// 用户登录
+/* 用户登录接口
+登录流程：
+1、数据库查询用户名
+2、有记录时sha265加密密码
+3、密码与查询记录比较
+4、用户名密码验证成功时，更新数据库中用户最后登录时间数据
+5、登录成功时添加cookies
+6、返回相应的登录代码和对应的消息
+*/
 router.post("/login", multipartMiddleware, function (req, res, next) {
   var connection = mysql.createConnection(mysqlConfig);
   connection.connect();
-  var isMember = false;//是否已注册用户
+  var send = false;//是否已返回数据
   var query = connection.query('SELECT `password` FROM `users` WHERE `username`="' + req.body.username + '"');//查询用户
-  query.on("result", function (rows) {
-    isMember = true;
+  query.on("result", function (rows) {//有数据记录
+    send = true;
     var nonce_str = "dsjk43vkblsn";//加密字符串
     var password = req.body.password + nonce_str;
     var fsHash = crypto.createHash('sha256');
@@ -32,7 +43,7 @@ router.post("/login", multipartMiddleware, function (req, res, next) {
           code: "00000",
           msg: "登录成功"
         };
-        res.cookie("login",true,{expires: new Date(Date.now() + 60000)});//设置COOKIE，60秒过期
+        res.cookie("login", true, { expires: new Date(Date.now() + 60000) });//设置COOKIE，60秒过期
         res.send(echoData);
         return;
       });
@@ -48,14 +59,24 @@ router.post("/login", multipartMiddleware, function (req, res, next) {
   })
     .on("end", function () {//数据遍历完成
       connection.end();
-      if(!isMember){
+      if(!send){
         var echoData = {
           code: "00001",
           msg: "用户不存在"
         };
         res.send(echoData);
-        return;
-      }  
+      }
+      return;
+    })
+    .on("error", function () {//数据库查询失败
+      connection.end();
+      var echoData = {
+        code: "00003",
+        msg: "网络链接错误，请联系管理员[CODE=00003]!"
+      };
+      res.send(echoData);
+      send = true;
+      return;
     });
 });
 
