@@ -1,0 +1,22 @@
+.container{
+  margin: 50px;
+}
+
+@-webkit-keyframes fadeInOutLoop
+{
+  0% {
+    -webkit-transform: scale(1,0);
+  }
+  10% {
+    -webkit-transform: scale(1,1);
+  }
+  90% {
+    -webkit-transform: scale(1,1);
+  }
+  100% {
+    -webkit-transform: scale(1,0);
+  }
+}
+.alert{
+  -webkit-animation: fadeInOutLoop 3s forwards;
+}    

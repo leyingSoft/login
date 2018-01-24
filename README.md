@@ -1,8 +1,10 @@
 # 用户登录功能
-## 前端页面:/public/login.html
+## 前端页面:/client/login.html
 前端页面使用Bootstrap框架搭建界面，使用Vue.js框架处理数据。
 
 前端数据通过ajax请求，通过json格式传输数据，实现低耦合的前后端分离,提高系统稳定性。
+
+前端项目通过GULP打包，在根目录执行./gulp对CLIENT下文件进行打包，压缩混淆js和css文件。GULP运行后，会监视文件修改，自动进行打包。
 
 ## 后端：/routes/users.js
 服务端使用node.js express框架,实现灵活同时高性能服务端搭建。
